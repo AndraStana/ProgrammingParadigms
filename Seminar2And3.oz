@@ -143,38 +143,7 @@ end
 
 
 %...........Course EXAMPLE........................
-
-            % Root = node(left:N1 right:N2 value:0)
-            % N1 = node(left:nil right:N3 value:1)
-            %     N3 = node(left:N4 right:nil value:3)
-            %         N4 = node(left:nil right:nil value:4)
-
-
-            % N2 = node(left:nil right:nil value:2)
-
-            % proc {Preorder X}
-            %     if X \= nil then {System.show X.value}
-            %         if X.left \= nil  then {Preorder X.left} end
-            %         if X.right \= nil then {Preorder X.right} end
-            %     end
-            % end
-
-
-            % {Preorder Root}
-
-N1 = node(3 nil N2)
-N2 = node(5 nil nil)
-
-
-
-proc {PreorderBinaryTree X}
-    if X \= nil then {System.show X.1}
-        if X.2 \= nil  then {PreorderBinaryTree X.2} end
-        if X.3 \= nil then {PreorderBinaryTree X.3} end
-    end
-end
-
-{PreorderBinaryTree N1}
+{ System.show '--------------------------'}
 
 
 fun {IsLeaf Node}
@@ -186,8 +155,6 @@ fun {IsLeaf Node}
     end
 end
 
-
-{ System.show '--------------------------'}
 
 fun {Insert Tree Value}
         if {IsLeaf Tree} then 
@@ -224,6 +191,51 @@ fun {Insert Tree Value}
     end
 end
 
+
+fun {Smallest Tree}
+
+    if Tree.2 \= nil then 
+        {Smallest Tree.2}
+    else
+        Tree.1
+    end
+end
+
+fun {Biggest Tree}
+
+    if Tree.3 \= nil then 
+        {Biggest Tree.3}
+    else
+        Tree.1
+    end
+end
+
+
+fun {IsSortedBST Tree}
+    if Tree == nil then true
+    else
+        local IsBiggest IsSmallest in 
+
+            if Tree.2 == nil then IsBiggest = true
+            else IsBiggest = {Biggest Tree.2} < Tree.1
+            end
+
+            if Tree.3 == nil then IsSmallest = true
+            else IsSmallest = {Smallest Tree.3} >= Tree.1
+            end
+
+            if  {And IsBiggest IsSmallest}
+            then 
+                {And {IsSortedBST Tree.2} {IsSortedBST Tree.3}}
+            else
+                false
+            end
+
+        end
+
+    end
+end
+
 %-----------------TEST TREE--------------------
 
 
@@ -239,13 +251,20 @@ P1 = node(8 P2 P7)
         P9 = node(14 nil nil)
 
 
-{ System.show '++++++++++++++++++++++++++++++++++'}
+{ System.show '+++++++++++++  INSERTION +++++++++++++++++++++'}
 
 {System.show {Insert P1 2}}
 { System.show '--------'}
 {System.show {Insert P1 9}}
 { System.show '--------'}
 {System.show {Insert P1 8}}
+
+{ System.show '+++++++++++++++ SMALLEST/ BIGGEST  +++++++++++++++++++'}
+{System.show {Smallest P1}}
+{System.show {Biggest P1}}
+
+{ System.show '+++++++++++++++ IS SORTED  +++++++++++++++++++'}
+{System.show {IsSortedBST P1}}
 
 
 {Application.exit 0}
