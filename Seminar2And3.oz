@@ -4,13 +4,16 @@ System
 Application
 define
 
-{ System.show '--------------------------'}
+
 
 %............Seminar 3 - Pb 1......................
+{ System.show '--------------------------'}
+
+
 fun { Member Xs Y }
-    case Xs 
+    case Xs
     of nil then false
-    [] H | T then 
+    [] H | T then
                 if  H == Y then true
                 else { Member T Y}
                 end
@@ -20,19 +23,20 @@ end
 X = [1 22 3 44]
 Y = 32
 
-{ System.show {Member X Y }}  
+{ System.show {Member X Y }}
 
-{ System.show '--------------------------'}
 
 
 
 %............Seminar 3 - Pb 2......................
+{ System.show '--------------------------'}
+
 
 fun { Take Xs N }
     case Xs
     of nil then nil
     [] H|T then
-            if N > 0 then H | { Take T N-1} 
+            if N > 0 then H | { Take T N-1}
             else nil
             end
     end
@@ -43,7 +47,7 @@ fun { Drop Xs N }
     case Xs
     of nil then nil
     [] H|T then
-            if N > 0 then { Drop T N-1} 
+            if N > 0 then { Drop T N-1}
             else Xs
             end
     end
@@ -53,34 +57,35 @@ end
 X2 = [1 4 2 6 2]
 Y2 = 3
 
-{ System.show {Take X2 Y2 }}  
+{ System.show {Take X2 Y2 }}
 
 { System.show '--------------------------'}
 
-{ System.show {Drop X2 Y2 }}  
+{ System.show {Drop X2 Y2 }}
 
 { System.show '--------------------------'}
 
 
 %............Seminar 3 - Pb 5......................
 
+
 Expression = add(int(1) mul(int(3) int(4)))
 
-fun { Eval Exp} 
+fun { Eval Exp}
     case Exp of int(Number) then Number
-    [] add(Exp1 Exp2) then {Eval Exp1} + {Eval Exp2} 
-    [] mul(Exp1 Exp2) then {Eval Exp1} * {Eval Exp2} 
+    [] add(Exp1 Exp2) then {Eval Exp1} + {Eval Exp2}
+    [] mul(Exp1 Exp2) then {Eval Exp1} * {Eval Exp2}
     end
 end
 
 {System.show {Eval Expression }}
 
 
-{ System.show '--------------------------'}
 
 
 
 %............Seminar 2 - Pb 1......................
+{ System.show '--------------------------'}
 
 
 
@@ -115,7 +120,7 @@ end
 
 fun {Comb2Recursive N K Inc }
     if K == 0 then {Int.toFloat 1}
-    else 
+    else
         if Inc == K
             then {Int.toFloat (N-K+1) } / {Int.toFloat K}
         else
@@ -128,12 +133,119 @@ fun {Comb2 N K}
     {Comb2Recursive N K 1}
 end
 
+{ System.show {Comb2 10 3}}
+
+
+%............Seminar 2 - Pb 4......................
+{ System.show '--------------------------'}
 
 
 
 
+%...........Course EXAMPLE........................
+
+            % Root = node(left:N1 right:N2 value:0)
+            % N1 = node(left:nil right:N3 value:1)
+            %     N3 = node(left:N4 right:nil value:3)
+            %         N4 = node(left:nil right:nil value:4)
 
 
+            % N2 = node(left:nil right:nil value:2)
+
+            % proc {Preorder X}
+            %     if X \= nil then {System.show X.value}
+            %         if X.left \= nil  then {Preorder X.left} end
+            %         if X.right \= nil then {Preorder X.right} end
+            %     end
+            % end
+
+
+            % {Preorder Root}
+
+N1 = node(3 nil N2)
+N2 = node(5 nil nil)
+
+
+
+proc {PreorderBinaryTree X}
+    if X \= nil then {System.show X.1}
+        if X.2 \= nil  then {PreorderBinaryTree X.2} end
+        if X.3 \= nil then {PreorderBinaryTree X.3} end
+    end
+end
+
+{PreorderBinaryTree N1}
+
+
+fun {IsLeaf Node}
+    if Node == nil then false
+    else
+        if {And Node.2==nil Node.3==nil} then true
+        else false
+        end
+    end
+end
+
+
+{ System.show '--------------------------'}
+
+fun {Insert Tree Value}
+        if {IsLeaf Tree} then 
+            if Value < Tree.1 then
+                node( Tree.1 node(Value nil nil) nil )
+            else
+                node( Tree.1 nil node(Value nil nil) ) 
+            end
+        else
+            local LeftTree RightTree ReturnedTree in
+
+                if Value < Tree.1 then
+                    if Tree.2 \= nil 
+                        then LeftTree = {Insert Tree.2 Value }
+                    else LeftTree= nil
+                    end
+                else
+                    LeftTree = Tree.2
+                end
+
+                if Value >= Tree.1 then
+                    if Tree.3 \= nil 
+                        then RightTree = {Insert Tree.3 Value }
+                    else RightTree = nil
+                    end
+                else
+                    RightTree = Tree.3
+                end
+
+                ReturnedTree = node(Tree.1 LeftTree RightTree )
+
+                ReturnedTree
+            end
+    end
+end
+
+%-----------------TEST TREE--------------------
+
+
+P1 = node(8 P2 P7)
+    P2 = node(3 P3 P4)
+        P3 = node(1 nil nil)
+        P4 = node(6 P5 P6)
+            P5 = node(5 nil nil)
+            P6 = node(7 nil nil)
+
+    P7 = node(11 P8 P9)
+        P8 = node(10 nil nil)
+        P9 = node(14 nil nil)
+
+
+{ System.show '++++++++++++++++++++++++++++++++++'}
+
+{System.show {Insert P1 2}}
+{ System.show '--------'}
+{System.show {Insert P1 9}}
+{ System.show '--------'}
+{System.show {Insert P1 8}}
 
 
 {Application.exit 0}
