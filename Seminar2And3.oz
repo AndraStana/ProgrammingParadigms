@@ -140,12 +140,6 @@ end
 { System.show '--------------------------'}
 
 
-
-
-%...........Course EXAMPLE........................
-{ System.show '--------------------------'}
-
-
 fun {IsLeaf Node}
     if Node == nil then false
     else
@@ -267,5 +261,87 @@ P1 = node(8 P2 P7)
 {System.show {IsSortedBST P1}}
 
 
+
+
+%............Seminar 4 - Pb 2......................
+{ System.show '--------------------------'}
+
+fun {IsMember Env Id}
+    case Env
+    of nil then false
+    [] H | T then 
+        case H of (IdH#ExpH) then
+            
+            if IdH == Id then true
+            else {IsMember T Id}
+            end
+        
+        end
+    end
+end
+     
+EnvL = [ a#abb b#bcc c#cdd ]
+{System.show {IsMember EnvL c}}
+
+
+
+fun {Fetch Env Id}
+    case Env
+    of nil then Id
+    [] H | T then 
+        case H of (IdH#ExpH) then
+            
+            if IdH == Id then ExpH
+            else {Fetch T Id}
+            end
+        
+        end
+    end
+end
+
+{System.show {Fetch EnvL a}}
+
+
+
+fun {AdJoin Env IdExp}
+    case Env
+    of nil then [IdExp]
+    [] H | T then 
+        case H of (IdH#ExpH) then
+            
+            case IdExp of (NewId#NewExp) then
+
+                if IdH == NewId then IdExp | T
+                else  H | {AdJoin T IdExp}
+                end
+
+            end
+        
+        end
+    end
+end
+
+{System.show {AdJoin EnvL c#sss}}
+
+
+% fun {Ceva Ee} 
+%     if true then true else false end
+% end
+
+
+% {System.show {Ceva apply(let(x#y) y ) }   }
+
+% XXXX = apply(let(x#y) y)
+
+
+
+
+
 {Application.exit 0}
 end
+
+
+
+
+
+
