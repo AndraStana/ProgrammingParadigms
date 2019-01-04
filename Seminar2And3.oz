@@ -262,6 +262,63 @@ P1 = node(8 P2 P7)
 
 
 
+%............Seminar 4 - Pb 1......................
+{ System.show '--------------------------'}
+
+
+fun {CombineLists L1 L2}
+    case L1
+    of nil then L2
+    [] H | T then {CombineLists T H | L2 }
+    end
+end
+
+
+fun {GetFreeRecursive Exp Bounds}
+    case Exp of
+    
+    apply(Exp1 Exp2) then
+         {CombineLists {GetFreeRecursive Exp1 Bounds} {GetFreeRecursive Exp2 Bounds} }
+
+    [] lam(Id Exp1) then
+        {GetFreeRecursive Exp1 Id | Bounds }
+
+    [] let(Id#Exp1 Exp2 ) then
+        {CombineLists {GetFreeRecursive Exp1 Id | Bounds} {GetFreeRecursive Exp2 Id | Bounds} }
+
+    [] Id then
+        if {Member Bounds Id} then nil
+        else [ Id ]
+        end
+
+    end
+end
+
+
+
+
+fun {GetFree Exp}
+    {GetFreeRecursive Exp nil}
+end
+
+
+
+
+Incerc1 = aaa
+Incerc2 = lam(aaa aaa)
+Incerc3 = let(aaa#z aaa)
+Incerc4 = lam(x apply(y x))
+Incerc5 = apply(x let(x#y x))
+Incerc6 = apply(y apply(let(x#x x) y))
+
+
+
+{System.show {GetFree Incerc1} }
+{System.show {GetFree Incerc2} }
+{System.show {GetFree Incerc3} }
+{System.show {GetFree Incerc4} }
+{System.show {GetFree Incerc5} }
+{System.show {GetFree Incerc6} }
 
 %............Seminar 4 - Pb 2......................
 { System.show '--------------------------'}
@@ -324,6 +381,20 @@ end
 {System.show {AdJoin EnvL c#sss}}
 
 
+
+
+
+
+%............Seminar 4 - Pb 3......................
+
+
+
+% pt pb 3, check pt fiecare exp 
+
+
+
+
+
 % fun {Ceva Ee} 
 %     if true then true else false end
 % end
@@ -332,6 +403,122 @@ end
 % {System.show {Ceva apply(let(x#y) y ) }   }
 
 % XXXX = apply(let(x#y) y)
+
+
+
+
+
+Cnt = {NewCell 0}
+fun {NewId}
+    Cnt :=  @Cnt + 1
+    { String.toAtom { Append "id<" {Append { Int.toString @Cnt} ">"  }}}
+end
+
+
+
+
+
+
+% fun {RenameRec Exp Env}
+%     case Exp of Id
+%         if {IsMember Env Id}
+%             then {Fetch Env Id}
+%         else
+%             local NewName, NewEnv in
+%                 NewName = NewId
+%                 NewEnv AdJoin
+%             end
+
+
+%         then Id
+   
+   
+%     end
+% end
+
+% fun {Rename Exp }
+%     {RenameRec Exp nil}
+% end
+
+
+
+
+
+{System.show '............................. RENAAAAAAAAAAAMEEE .................'}
+
+% {System.show {Rename aaa}}
+
+
+
+
+
+
+
+% fun {RenameRec Exp Env}
+%     case Exp of 
+    
+%     Id then
+%         if {IsMember @Env Id} then {Fetch @Env Id}
+%         else
+%             local NewName in
+%                 NewName = {NewId}
+%                 Env := {AdJoin @Env Id#NewName}
+%                 NewName
+%             end
+%         end
+    
+    
+%     [] lam(exp1 exp2) then 
+
+
+
+%     end
+
+% end
+
+
+% fun {Rename Exp }
+
+%     local LocalEnv = {NewCell nil} Response in
+%         Response = {RenameRec Exp LocalEnv}
+%         {System.show @LocalEnv}
+%         Response
+%     end
+
+    
+% end
+
+% {System.show id1}
+
+
+
+
+
+
+
+
+
+
+
+
+
+% TestEnv = {NewCell nil}
+
+
+% {System.show @TestEnv}
+
+
+
+% fun {Reassign NewList}
+%     TestEnv := NewList
+% end
+
+% {System.show {Reassign [2 3 4]} }
+
+% {System.show @TestEnv}
+
+
+
 
 
 
