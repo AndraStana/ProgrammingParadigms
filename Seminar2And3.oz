@@ -189,6 +189,21 @@ end
 
 { System.show {Comb2 10 3}}
 
+%............Seminar 2 - Pb 2......................
+%Seminar 2, pb2 - Simplified version of the reverse algorithm
+fun { Reverse L1 L2 }
+   case L1 of
+      nil then L2
+      [] H | T then { Reverse T H|L2 }  
+   end
+end
+
+{ System.show '-------S2P2-----Reverse tests: '}
+
+X3 = [a b c]
+Y3 = nil
+{ System.show { Reverse X3 Y3}}
+
 
 %............Seminar 2 - Pb 4......................
 { System.show '--------------------------'}
