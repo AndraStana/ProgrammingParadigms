@@ -5,6 +5,62 @@ Application
 define
 
 
+%............Seminar 1 - Pb 1......................
+
+fun { Abs Y}
+   if { Int.is Y} then
+      if Y<0 then Y*(~1)
+      else Y
+      end
+   else
+      if { Float.is Y} then
+	 if Y<0.0 then Y*(~1.0)
+	    else Y end
+	 else 0 end
+   end
+end
+
+ { System.show '-------S1P1-----Abs tests: '}
+ { System.show {Abs ~2}}
+ { System.show {Abs 4}}
+ { System.show {Abs  5.2}}
+ { System.show {Abs  ~3.5}}
+
+ %............Seminar 1 - Pb 2......................
+%Pb2 power: n^m, n-integer, m-natural
+fun {Pow N M}
+   if M==0 then 1
+   else
+      {Pow N M-1} * N
+   end
+end
+
+{ System.show '-------S1P2-----Pow tests: '}
+{ System.show {Pow 2 3}}
+{ System.show {Pow 0 10}}
+{ System.show {Pow 4 0}}
+{ System.show {Pow ~2 3}}
+{ System.show {Pow ~3 0}}
+{ System.show {Pow ~4 1}}
+
+ %............Seminar 1 - Pb 3......................
+%Pb3 - max recursively: max of 2 natural numbers; allowed to test only if a number is 0 !!
+% n>=0, m>=0
+fun {MaxRec N M}
+   if N==0 then M
+   else
+      if M==0 then N
+      else
+	 1+ {MaxRec N-1 M-1}
+      end
+   end
+end
+{ System.show '-------S1P3-----Maximum Recursive tests: '}
+{ System.show {MaxRec 0 0}}
+{ System.show {MaxRec 4 4}}
+{ System.show {MaxRec 40 55}}
+{ System.show {MaxRec 23 18}}
+
 %............Seminar 3 - Pb 1......................
 { System.show '--------------------------'}
 
