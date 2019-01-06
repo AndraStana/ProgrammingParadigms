@@ -119,6 +119,97 @@ Y2 = 3
 
 { System.show '--------------------------'}
 
+%............Seminar 3 - Pb 3......................
+%Xs, Ys - have the same length
+fun {Zip Xs#Ys}
+   case Xs
+   of nil then nil
+   [] Hx | Tx then
+      case Ys
+      of nil then nil
+      [] Hy | Ty then
+	 Hx#Hy | {Zip Tx#Ty}
+      end
+    end
+end
+
+Xs=[a b c]
+Ys=[1 2 3]
+{ System.show '-------S3P3-----Zip test: '}
+{ System.show {Zip Xs#Ys}}
+
+%----------------unzip
+fun {UnzipA Xs}
+   case Xs of
+      nil then nil
+   [] H | T then
+      case H of
+	 A#B then A | { UnzipA T}
+      end
+   end
+end
+
+fun {UnzipB Xs}
+	   case Xs of
+	      nil then nil
+	   [] H | T then
+	      case H of
+		 A#B then B | {UnzipB T}
+	      end
+	   end
+	end
+ 
+fun {Unzip Xs}
+   local Lst1 Lst2 in
+      Lst1 = {UnzipA Xs}
+      Lst2= {UnzipB Xs}
+      Lst1#Lst2
+      end
+ end
+
+Lu=[a#1 b#2 c#3]
+{ System.show '-------S3P3-----UnZip test: '}
+{ System.show {Unzip Lu}}
+
+%............Seminar 3 - Pb 4......................
+%position of an element in a list
+%----------v1. assume Y is an element of the list
+fun {Position1 Xs Y}
+   case Xs
+   of H | T then
+      if H == Y then 1
+      else 1 + {Position1 T Y}
+      end
+    [] nil then 0
+   end
+end
+
+X4=[a b c]
+Y4= c
+{ System.show '-------S3P4-----Position v1 test: '}
+{ System.show {Position1 X4 Y4}}
+
+%-------------------v2: returns 0 if element doesn't exist in list
+
+fun {Position2 Xs Y}
+	   case Xs
+	   of nil then 0
+	   [] H | T then
+	      if H == Y then 1
+	      else
+		 local Res in 
+		    Res = {Position2 T Y}
+		    if Res > 0 then Res + 1
+		    else 0
+		    end
+		 end
+	      end
+	   end
+	end
+
+{ System.show '-------S3P4-----Position v2 test: '}
+{ System.show {Position2 [a b c] a}}
+{ System.show {Position2 [a b c] d}}
 
 %............Seminar 3 - Pb 5......................
 
